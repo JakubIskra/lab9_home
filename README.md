@@ -8,6 +8,7 @@ pipeline GitHub Actions
 - wykorzystanie cache
 
 Sprawozdanie
+Link do Docker Hub - https://hub.docker.com/repository/docker/iskra56/example/general
 
 This repository demonstrates a CI/CD workflow configured with GitHub Actions (GHA). The workflow automates:
 1. Building and tagging a Docker image.
