@@ -19,7 +19,7 @@ This repository demonstrates a CI/CD workflow configured with GitHub Actions (GH
 ## Configuration Steps
 
 ### Workflow Configuration
-The workflow (`.github/workflows/ci.yml`) performs the following steps:
+The workflow performs the following steps:
 1. **Checkout the repository**: Fetches the source code.
 2. **Build and tag Docker image**: Builds the Docker image using `docker/build-push-action`.
 3. **Run vulnerability tests**: Analyzes the image using Docker Scout and ensures no critical/high vulnerabilities exist.
