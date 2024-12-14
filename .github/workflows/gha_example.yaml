@@ -8,7 +8,7 @@ on:
 
 jobs:
   ci_step:
-    name: Build, tag and push Docker image to DockerHub
+    name: Build, tag, and push Docker image to DockerHub
     runs-on: ubuntu-latest
       
     steps:
@@ -16,7 +16,7 @@ jobs:
         name: Check out the source_repo
         uses: actions/checkout@v4
       
-      -
+      - 
         name: Docker metadata definitions
         id: meta
         uses: docker/metadata-action@v5
@@ -26,7 +26,7 @@ jobs:
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
             type=semver,priority=200,pattern={{version}}   
-
+      
       - 
         name: QEMU set-up
         uses: docker/setup-qemu-action@v3
@@ -55,4 +55,17 @@ jobs:
           cache-to: |
             type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/example:cache  
           tags: ${{ steps.meta.outputs.tags }}
-      
+
+      # Install Docker Scout
+      - 
+        name: Install Docker Scout
+        run: |
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sh get-docker.sh
+          docker scout --version
+
+      # Analyze Docker image with Docker Scout
+      - 
+        name: Analyze Docker image for vulnerabilities
+        run: |
+          docker scout cves ${{ vars.DOCKERHUB_USERNAME }}/example:${{ steps.meta.outputs.tags | split(',')[0] }}
